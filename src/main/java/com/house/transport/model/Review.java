@@ -1,8 +1,6 @@
 package com.house.transport.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,13 +11,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class review {
+public class Review {
     @Id
     @GeneratedValue
     private int id;
-
-    private int customer_id;
-    private int mover_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Customer customer_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Mover mover_id;
     private int evaluation;
     private String comment;
 }

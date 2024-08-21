@@ -1,17 +1,20 @@
 package com.house.transport.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class mover {
+public class Mover {
     @Id
     @GeneratedValue
     private int id;
@@ -28,4 +31,7 @@ public class mover {
     private byte[] k3_certificate;
     private long vkn;
     private int max_floor;
+    @OneToMany(mappedBy = "mover_id")
+    @JsonIgnore
+    private List<Review> reviewList;
 }
