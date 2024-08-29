@@ -49,10 +49,10 @@ public class Contract {
     private Long moverId;
 
     @Column(name = "total_price", nullable = false)
+    @Min(value = 0, message = "Total price 0 dan küçük olamaz.")
     private double totalPrice;
 
     @Column(name = "status", nullable = false)
-    @Min(value = 0, message = "Total price 0 dan küçük olamaz.")
     private String status;
 
     // Enum types
