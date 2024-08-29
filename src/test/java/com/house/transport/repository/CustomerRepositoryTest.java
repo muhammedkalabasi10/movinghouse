@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import static org.assertj.core.api.Assertions.assertThat;
-
+import java.util.Optional;
 @Testcontainers
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -28,6 +28,40 @@ public class CustomerRepositoryTest {
                 .extracting(Customer::getEmail, Customer::getPhone)
                 .containsExactly(customer.getEmail(), customer.getPhone());
 
+    }
+    @Test
+    public void findCustomerByIdSuccess() {
+        Customer customer = new Customer(null, "john", "doe", "johndoe@example.com", "1234567890", "123.Dg_d");
+        Customer createdCustomer = customerRepository.save(customer);
+
+        Optional<Customer> foundCustomer = customerRepository.findById(createdCustomer.getId());
+        assertThat(foundCustomer).isPresent()
+                .get()
+                .extracting(Customer::getEmail, Customer::getPhone)
+                .containsExactly(customer.getEmail(), customer.getPhone());
+    }
+    @Test
+    public void updateCustomerSuccess() {
+        Customer customer = new Customer(null, "jane", "doe", "janedoe@example.com", "0987654321", "123.Dg_d");
+        Customer createdCustomer = customerRepository.save(customer);
+
+        createdCustomer.setPhone("1111111111");
+        Customer updatedCustomer = customerRepository.save(createdCustomer);
+
+        assertThat(updatedCustomer)
+                .extracting(Customer::getPhone)
+                .isEqualTo("1111111111");
+    }
+
+    @Test
+    public void deleteCustomerSuccess() {
+        Customer customer = new Customer(null, "alex", "smith", "alexsmith@example.com", "5555555555", "123.Dg_d");
+        Customer createdCustomer = customerRepository.save(customer);
+
+        customerRepository.delete(createdCustomer);
+        Optional<Customer> deletedCustomer = customerRepository.findById(createdCustomer.getId());
+
+        assertThat(deletedCustomer).isNotPresent();
     }
 
 }
