@@ -5,6 +5,7 @@ import com.house.transport.model.Contract;
 import com.house.transport.model.Customer;
 import com.house.transport.repository.ContractRepository;
 import com.house.transport.repository.CustomerRepository;
+import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -13,6 +14,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -74,6 +77,48 @@ public class ContractRepositoryTest {
                         contract.getMoverId(),
                         contract.getTotalPrice(),
                         contract.getStatus()
+                );
+    }
+
+    @Test
+    public void fetchContractssSuccess(){
+        List<Customer> customerList = new ArrayList<>();
+        int listSize = 3;
+        for(int i=0;i<listSize;i++){
+            customerList.add(new Customer(null, "TestName"+i,"TestSurname"+i,"testmail"+i+"@gmail.com",String.valueOf(i).repeat(10),"PasswordText*123"));
+        }
+        customerRepository.saveAllAndFlush(customerList);
+        List<Contract> contractList = new ArrayList<>();
+        for(int i=0;i<listSize;i++){
+            contractList.add(new Contract(
+                    null,
+                    "TestLoadingCity"+i,
+                    "TestUnloadingCity"+i,
+                    LocalDate.now().plusDays(i),
+                    "TestApartment"+i,
+                    1,
+                    1,
+                    customerList.get(i),
+                    (long) i,
+                    i*1000,
+                    "Confirmed"
+            ));
+        }
+        contractRepository.saveAllAndFlush(contractList);
+
+        int testContractIndex = 0;
+
+        List<Contract> fetchedContractList = contractRepository.findAll();
+        assertThat(fetchedContractList)
+                .hasSize(listSize)
+                .extracting(
+                        Contract::getLoadingCity,
+                        Contract::getUnloadingCity,
+                        Contract::getDate
+                ).contains(new Tuple(
+                        contractList.get(testContractIndex).getLoadingCity(),
+                        contractList.get(testContractIndex).getUnloadingCity(),
+                        contractList.get(testContractIndex).getDate())
                 );
     }
 
