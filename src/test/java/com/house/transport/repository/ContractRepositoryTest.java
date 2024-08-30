@@ -30,15 +30,13 @@ public class ContractRepositoryTest {
     private ContractRepository contractRepository;
 
     @Autowired
-    private CustomerRepository customerRepository; // Customer verilerini eklemek için
+    private CustomerRepository customerRepository;
 
     @Test
     public void createContractSuccess() {
-        // Önce bir müşteri kaydediyoruz
         Customer customer = new Customer(null, "doga", "yıldız", "dogayildiz@outlook.com", "5354463435", "123.Dg_d");
         customerRepository.save(customer);
 
-        // Yeni bir sözleşme oluşturuyoruz
         Contract contract = new Contract(
                 null,
                 "İstanbul",
@@ -48,13 +46,12 @@ public class ContractRepositoryTest {
                 3,
                 2,
                 customer,
-                101L,          // moverId
-                1500.0,        // totalPrice
-                "Pending"      // status
+                101L,
+                1500.0,
+                "Pending"
         );
         Contract createdContract = contractRepository.save(contract);
 
-        // Sözleşmenin başarıyla kaydedildiğini doğruluyoruz
         assertThat(createdContract)
                 .extracting(
                         Contract::getLoadingCity,
@@ -124,11 +121,9 @@ public class ContractRepositoryTest {
 
     @Test
     public void findContractByIdSuccess() {
-        // Önce bir müşteri kaydediyoruz
         Customer customer = new Customer(null, "john", "doe", "johndoe@example.com", "1234567890", "123.Dg_d");
         customerRepository.save(customer);
 
-        // Yeni bir sözleşme oluşturuyoruz
         Contract contract = new Contract(
                 null,
                 "İstanbul",
@@ -138,13 +133,12 @@ public class ContractRepositoryTest {
                 2,
                 1,
                 customer,
-                102L,          // moverId
-                2000.0,        // totalPrice
-                "Confirmed"    // status
+                102L,
+                2000.0,
+                "Confirmed"
         );
         Contract createdContract = contractRepository.save(contract);
 
-        // Sözleşmeyi ID ile buluyoruz
         Optional<Contract> foundContract = contractRepository.findById(createdContract.getId());
         assertThat(foundContract).isPresent()
                 .get()
@@ -174,11 +168,9 @@ public class ContractRepositoryTest {
 
     @Test
     public void updateContractSuccess() {
-        // Önce bir müşteri kaydediyoruz
         Customer customer = new Customer(null, "alex", "smith", "alexsmith@example.com", "5555555555", "123.Dg_d");
         customerRepository.save(customer);
 
-        // Yeni bir sözleşme oluşturuyoruz
         Contract contract = new Contract(
                 null,
                 "İstanbul",
@@ -188,18 +180,16 @@ public class ContractRepositoryTest {
                 1,
                 3,
                 customer,
-                103L,          // moverId
-                1200.0,        // totalPrice
-                "In Progress"  // status
+                103L,
+                1200.0,
+                "In Progress"
         );
         Contract createdContract = contractRepository.save(contract);
 
-        // Sözleşmeyi güncelliyoruz
         createdContract.setLoadingCity("İzmir");
-        createdContract.setTotalPrice(1300.0); // updated totalPrice
+        createdContract.setTotalPrice(1300.0);
         Contract updatedContract = contractRepository.save(createdContract);
 
-        // Güncellenmiş sözleşmenin doğru olduğunu doğruluyoruz
         assertThat(updatedContract)
                 .extracting(
                         Contract::getLoadingCity,
@@ -210,11 +200,9 @@ public class ContractRepositoryTest {
 
     @Test
     public void deleteContractSuccess() {
-        // Önce bir müşteri kaydediyoruz
         Customer customer = new Customer(null, "mary", "jones", "maryjones@example.com", "6666666666", "123.Dg_d");
         customerRepository.save(customer);
 
-        // Yeni bir sözleşme oluşturuyoruz
         Contract contract = new Contract(
                 null,
                 "Ankara",
@@ -224,16 +212,14 @@ public class ContractRepositoryTest {
                 4,
                 2,
                 customer,
-                104L,          // moverId
-                2500.0,        // totalPrice
-                "Cancelled"    // status
+                104L,
+                2500.0,
+                "Cancelled"
         );
         Contract createdContract = contractRepository.save(contract);
 
-        // Sözleşmeyi siliyoruz
         contractRepository.delete(createdContract);
 
-        // Sözleşmenin silindiğini doğruluyoruz
         Optional<Contract> deletedContract = contractRepository.findById(createdContract.getId());
         assertThat(deletedContract).isNotPresent();
     }

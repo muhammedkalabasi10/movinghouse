@@ -28,7 +28,6 @@ public class MoverRepositoryTest {
 
     @Test
     public void createMoverSuccess() {
-        // Geçerli bir Mover nesnesi oluşturuyoruz
         Mover mover = new Mover(
                 0,
                 "mover@example.com",
@@ -42,7 +41,7 @@ public class MoverRepositoryTest {
                 new byte[0],
                 "1234567890",
                 5,
-                List.of() // Başlangıçta boş bir review listesi
+                List.of()
         );
 
         Mover createdMover = moverRepository.save(mover);
