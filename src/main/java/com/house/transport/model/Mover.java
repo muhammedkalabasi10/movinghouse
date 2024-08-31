@@ -18,7 +18,7 @@ import java.util.List;
 public class Mover {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     @NotEmpty(message = "Email cannot be empty")
     private String email;
