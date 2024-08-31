@@ -34,7 +34,7 @@ public class Customer {
 
     @Column(name = "phone", nullable = false, unique = true)
     @NotBlank()
-    @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be between 10 and 11 digits")
+    @Pattern(regexp = "^[0-9]{10,11}$", message = "Phone number must be between 10 and 11 digits")
     private String phone;
 
     @Column(name = "password", nullable = false)

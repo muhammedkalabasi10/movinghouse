@@ -22,7 +22,7 @@ public class Mover {
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     @NotEmpty(message = "Email cannot be empty")
     private String email;
-    @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be between 10 and 11 digits")
+    @Pattern(regexp = "^[0-9]{10,11}$", message = "Phone number must be between 10 and 11 digits")
     private String phone;
     private String password;
     private String company_name;
