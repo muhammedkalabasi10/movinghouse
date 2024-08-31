@@ -27,15 +27,15 @@ public class Contract {
     private String unloadingCity;
 
     @Column(nullable = false)
-    @FutureOrPresent(message = "Tarih bugünden önce olamaz")
+    @FutureOrPresent(message = "The date cannot be before today")
     private LocalDate date;
 
     @Column(name = "property_type", nullable = false)
     private String propertyType;  // studio, apartment/condo, house
 
     @Column(name = "bedroom_num", nullable = false)
-    @Min(value = 0, message = "Oda sayısı 0 veya daha büyük olmalıdır")
-    private int bedroomNum; //frontend de seçenek konulabilir.
+    @Min(value = 0, message = "Bedroom number must be at least 0")
+    private int bedroomNum;
 
     @Column(name = "floor_num", nullable = false)
     private int floorNum;
@@ -49,7 +49,7 @@ public class Contract {
     private Long moverId;
 
     @Column(name = "total_price", nullable = false)
-    @Min(value = 0, message = "Total price 0 dan küçük olamaz.")
+    @Min(value = 0, message = "Total price cannot be lower than 0")
     private double totalPrice;
 
     @Column(name = "status", nullable = false)

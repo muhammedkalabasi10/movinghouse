@@ -3,8 +3,7 @@ package com.house.transport.repository;
 import com.house.transport.config.TestApplication;
 import com.house.transport.model.Contract;
 import com.house.transport.model.Customer;
-import com.house.transport.repository.ContractRepository;
-import com.house.transport.repository.CustomerRepository;
+import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -13,6 +12,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,15 +28,13 @@ public class ContractRepositoryTest {
     private ContractRepository contractRepository;
 
     @Autowired
-    private CustomerRepository customerRepository; // Customer verilerini eklemek için
+    private CustomerRepository customerRepository;
 
     @Test
     public void createContractSuccess() {
-        // Önce bir müşteri kaydediyoruz
         Customer customer = new Customer(null, "doga", "yıldız", "dogayildiz@outlook.com", "5354463435", "123.Dg_d");
         customerRepository.save(customer);
 
-        // Yeni bir sözleşme oluşturuyoruz
         Contract contract = new Contract(
                 null,
                 "İstanbul",
@@ -45,13 +44,12 @@ public class ContractRepositoryTest {
                 3,
                 2,
                 customer,
-                101L,          // moverId
-                1500.0,        // totalPrice
-                "Pending"      // status
+                101L,
+                1500.0,
+                "Pending"
         );
         Contract createdContract = contractRepository.save(contract);
 
-        // Sözleşmenin başarıyla kaydedildiğini doğruluyoruz
         assertThat(createdContract)
                 .extracting(
                         Contract::getLoadingCity,
@@ -78,12 +76,52 @@ public class ContractRepositoryTest {
     }
 
     @Test
+    public void fetchContractssSuccess(){
+        List<Customer> customerList = new ArrayList<>();
+        int listSize = 3;
+        for(int i=0;i<listSize;i++){
+            customerList.add(new Customer(null, "TestName"+i,"TestSurname"+i,"testmail"+i+"@gmail.com",String.valueOf(i).repeat(10),"PasswordText*123"));
+        }
+        customerRepository.saveAllAndFlush(customerList);
+        List<Contract> contractList = new ArrayList<>();
+        for(int i=0;i<listSize;i++){
+            contractList.add(new Contract(
+                    null,
+                    "TestLoadingCity"+i,
+                    "TestUnloadingCity"+i,
+                    LocalDate.now().plusDays(i),
+                    "TestApartment"+i,
+                    1,
+                    1,
+                    customerList.get(i),
+                    (long) i,
+                    i*1000,
+                    "Confirmed"
+            ));
+        }
+        contractRepository.saveAllAndFlush(contractList);
+
+        int testContractIndex = 0;
+
+        List<Contract> fetchedContractList = contractRepository.findAll();
+        assertThat(fetchedContractList)
+                .hasSize(listSize)
+                .extracting(
+                        Contract::getLoadingCity,
+                        Contract::getUnloadingCity,
+                        Contract::getDate
+                ).contains(new Tuple(
+                        contractList.get(testContractIndex).getLoadingCity(),
+                        contractList.get(testContractIndex).getUnloadingCity(),
+                        contractList.get(testContractIndex).getDate())
+                );
+    }
+
+    @Test
     public void findContractByIdSuccess() {
-        // Önce bir müşteri kaydediyoruz
         Customer customer = new Customer(null, "john", "doe", "johndoe@example.com", "1234567890", "123.Dg_d");
         customerRepository.save(customer);
 
-        // Yeni bir sözleşme oluşturuyoruz
         Contract contract = new Contract(
                 null,
                 "İstanbul",
@@ -93,13 +131,12 @@ public class ContractRepositoryTest {
                 2,
                 1,
                 customer,
-                102L,          // moverId
-                2000.0,        // totalPrice
-                "Confirmed"    // status
+                102L,
+                2000.0,
+                "Confirmed"
         );
         Contract createdContract = contractRepository.save(contract);
 
-        // Sözleşmeyi ID ile buluyoruz
         Optional<Contract> foundContract = contractRepository.findById(createdContract.getId());
         assertThat(foundContract).isPresent()
                 .get()
@@ -129,11 +166,9 @@ public class ContractRepositoryTest {
 
     @Test
     public void updateContractSuccess() {
-        // Önce bir müşteri kaydediyoruz
         Customer customer = new Customer(null, "alex", "smith", "alexsmith@example.com", "5555555555", "123.Dg_d");
         customerRepository.save(customer);
 
-        // Yeni bir sözleşme oluşturuyoruz
         Contract contract = new Contract(
                 null,
                 "İstanbul",
@@ -143,18 +178,16 @@ public class ContractRepositoryTest {
                 1,
                 3,
                 customer,
-                103L,          // moverId
-                1200.0,        // totalPrice
-                "In Progress"  // status
+                103L,
+                1200.0,
+                "In Progress"
         );
         Contract createdContract = contractRepository.save(contract);
 
-        // Sözleşmeyi güncelliyoruz
         createdContract.setLoadingCity("İzmir");
-        createdContract.setTotalPrice(1300.0); // updated totalPrice
+        createdContract.setTotalPrice(1300.0);
         Contract updatedContract = contractRepository.save(createdContract);
 
-        // Güncellenmiş sözleşmenin doğru olduğunu doğruluyoruz
         assertThat(updatedContract)
                 .extracting(
                         Contract::getLoadingCity,
@@ -165,11 +198,9 @@ public class ContractRepositoryTest {
 
     @Test
     public void deleteContractSuccess() {
-        // Önce bir müşteri kaydediyoruz
         Customer customer = new Customer(null, "mary", "jones", "maryjones@example.com", "6666666666", "123.Dg_d");
         customerRepository.save(customer);
 
-        // Yeni bir sözleşme oluşturuyoruz
         Contract contract = new Contract(
                 null,
                 "Ankara",
@@ -179,16 +210,14 @@ public class ContractRepositoryTest {
                 4,
                 2,
                 customer,
-                104L,          // moverId
-                2500.0,        // totalPrice
-                "Cancelled"    // status
+                104L,
+                2500.0,
+                "Cancelled"
         );
         Contract createdContract = contractRepository.save(contract);
 
-        // Sözleşmeyi siliyoruz
         contractRepository.delete(createdContract);
 
-        // Sözleşmenin silindiğini doğruluyoruz
         Optional<Contract> deletedContract = contractRepository.findById(createdContract.getId());
         assertThat(deletedContract).isNotPresent();
     }

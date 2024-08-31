@@ -18,11 +18,11 @@ import java.util.List;
 public class Mover {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     @NotEmpty(message = "Email cannot be empty")
     private String email;
-    @Pattern(message = "Please enter a valid phone number", regexp = "^(\\+0?1\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$\n")
+    @Pattern(regexp = "^[0-9]{10,11}$", message = "Phone number must be between 10 and 11 digits")
     private String phone;
     private String password;
     private String company_name;
