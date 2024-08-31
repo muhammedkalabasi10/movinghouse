@@ -18,7 +18,6 @@ import java.util.Optional;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(classes = TestApplication.class)
-//@Sql("/externalprovider/repository/domain.sql")
 public class CustomerRepositoryTest {
 
     @Autowired

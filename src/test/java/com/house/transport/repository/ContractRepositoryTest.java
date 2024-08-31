@@ -3,8 +3,6 @@ package com.house.transport.repository;
 import com.house.transport.config.TestApplication;
 import com.house.transport.model.Contract;
 import com.house.transport.model.Customer;
-import com.house.transport.repository.ContractRepository;
-import com.house.transport.repository.CustomerRepository;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
