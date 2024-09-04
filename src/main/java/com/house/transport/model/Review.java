@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 public class Review {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer_id;
