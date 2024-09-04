@@ -27,7 +27,6 @@ import com.nimbusds.jose.proc.SecurityContext;
 
 @Configuration
 public class SecurityConfig {
-
     private final ComposedDetailsService composedDetailsService;
 
     public SecurityConfig(ComposedDetailsService composedDetailsService) {
