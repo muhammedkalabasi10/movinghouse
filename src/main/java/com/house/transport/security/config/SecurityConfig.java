@@ -58,7 +58,7 @@ public class SecurityConfig {
                     auth
                             .requestMatchers("/customer/**").hasRole("CUSTOMER")
                             .requestMatchers("/mover/**").hasRole("MOVER")
-                            .requestMatchers("/register/**", "/authenticate/**", "/refresh-token").permitAll()
+                            .requestMatchers("/register/**", "/authenticate/**", "/refresh-token","/logout").permitAll()
                             .anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

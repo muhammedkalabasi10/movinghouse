@@ -9,6 +9,8 @@ import com.house.transport.security.token.RefreshTokenService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -80,6 +82,16 @@ public class AuthController {
             throw new RuntimeException("Refresh token is expired");
         }
     }
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@RequestBody String refreshToken) {
+        try {
+            refreshTokenService.deleteRefreshToken(refreshToken);
+            return ResponseEntity.ok("Logout successful");
+        } catch (Exception e) {
+            // Log the exception and return an appropriate error response
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Logout failed");
+        }
+    }
 
     private AuthResponse authenticateAndGenerateToken(String email, String password, String role){
         authenticationManager.authenticate(
@@ -114,4 +126,6 @@ public class AuthController {
                 .build();
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
+
+
 }
