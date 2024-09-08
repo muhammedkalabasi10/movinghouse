@@ -82,7 +82,7 @@ public class AuthController {
             throw new RuntimeException("Refresh token is expired");
         }
     }
-    @PostMapping("/logout")
+    @PostMapping("/logoutuser")
     public ResponseEntity<String> logout(@RequestBody String refreshToken) {
         try {
             refreshTokenService.deleteRefreshToken(refreshToken);
