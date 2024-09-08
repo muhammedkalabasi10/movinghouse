@@ -88,7 +88,6 @@ public class AuthController {
             refreshTokenService.deleteRefreshToken(refreshToken);
             return ResponseEntity.ok("Logout successful");
         } catch (Exception e) {
-            // Log the exception and return an appropriate error response
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Logout failed");
         }
     }
