@@ -18,12 +18,6 @@ public class RefreshTokenService {
     @Autowired
     private RefreshTokenRepository refreshTokenRepository;
 
-    @Autowired
-    private CustomerRepository customerRepository;
-
-    @Autowired
-    private MoverRepository moverRepository;
-
     private static final Logger logger = LogManager.getLogger(RefreshTokenService.class);
 
     @Transactional
@@ -58,8 +52,13 @@ public class RefreshTokenService {
                 .isPresent();
     }
 
-    public void deleteRefreshToken(String token){
-        refreshTokenRepository.findByToken(token).ifPresent(refreshTokenRepository::delete);
+    public boolean deleteRefreshToken(String token) {
+        return refreshTokenRepository.findByToken(token)
+                .map(refreshToken -> {
+                    refreshTokenRepository.delete(refreshToken);
+                    return true;
+                })
+                .orElse(false);
     }
 
     public RefreshToken findToken(String token){
