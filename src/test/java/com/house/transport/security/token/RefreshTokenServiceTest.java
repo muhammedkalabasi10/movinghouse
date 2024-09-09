@@ -3,6 +3,7 @@ package com.house.transport.security.token;
 import com.house.transport.config.TestApplication;
 import com.house.transport.model.Customer;
 import com.house.transport.repository.CustomerRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(classes = TestApplication.class)
+@Transactional
 public class RefreshTokenServiceTest {
 
     @Autowired

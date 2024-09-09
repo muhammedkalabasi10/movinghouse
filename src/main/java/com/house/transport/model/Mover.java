@@ -47,6 +47,7 @@ public class Mover implements UserDetails {
     private List<Review> reviewList;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("MOVER"));
     }

@@ -3,6 +3,7 @@ package com.house.transport.repository;
 import com.house.transport.config.TestApplication;
 import com.house.transport.model.Contract;
 import com.house.transport.model.Customer;
+import jakarta.transaction.Transactional;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(classes = TestApplication.class)
+@Transactional
 public class ContractRepositoryTest {
 
     @Autowired
