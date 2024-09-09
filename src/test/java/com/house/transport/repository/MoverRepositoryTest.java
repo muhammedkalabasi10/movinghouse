@@ -2,6 +2,7 @@ package com.house.transport.repository;
 
 import com.house.transport.config.TestApplication;
 import com.house.transport.model.Mover;
+import jakarta.transaction.Transactional;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(classes = TestApplication.class)
+@Transactional
 public class MoverRepositoryTest {
 
     @Autowired
@@ -30,7 +32,7 @@ public class MoverRepositoryTest {
         Mover mover = new Mover(
                 null,
                 "mover@example.com",
-                "123 (456) 789-0123",
+                "05323323232",
                 "123.Dg_d",
                 "Mover Co.",
                 "logo.png",
