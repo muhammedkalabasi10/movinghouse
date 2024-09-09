@@ -85,8 +85,12 @@ public class AuthController {
     @PostMapping("/logoutuser")
     public ResponseEntity<String> logout(@RequestBody String refreshToken) {
         try {
-            refreshTokenService.deleteRefreshToken(refreshToken);
-            return ResponseEntity.ok("Logout successful");
+            if (refreshTokenService.deleteRefreshToken(refreshToken)){
+                return ResponseEntity.ok("Logout successful");
+            }else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Logout failed");
         }
