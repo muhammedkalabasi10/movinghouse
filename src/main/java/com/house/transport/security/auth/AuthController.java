@@ -2,6 +2,8 @@ package com.house.transport.security.auth;
 
 import com.house.transport.model.Customer;
 import com.house.transport.model.Mover;
+import com.house.transport.security.DTO.ChangePasswordRequestDTO;
+import com.house.transport.security.service.PasswordEmailService;
 import com.house.transport.security.token.RefreshToken;
 import com.house.transport.security.token.RefreshTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    PasswordEmailService passwordEmailService;
 
     @PostMapping("/register/customer")
     public AuthResponse registerCustomer(@RequestBody Customer customer){
@@ -72,5 +77,10 @@ public class AuthController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Logout failed");
         }
+    }
+
+    @PostMapping("/changepassword/customer")
+    public ResponseEntity<Customer> changeCustomerPassword(@RequestBody ChangePasswordRequestDTO request){
+        return ResponseEntity.ok(passwordEmailService.changeCustomerPassword(request.getEmail(), request.getOldPassword(), request.getNewPassword()));
     }
 }
