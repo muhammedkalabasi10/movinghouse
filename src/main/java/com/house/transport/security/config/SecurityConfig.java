@@ -1,5 +1,5 @@
 package com.house.transport.security.config;
-import com.house.transport.security.detailsservice.ComposedDetailsService;
+import com.house.transport.security.service.ComposedDetailsService;
 import com.nimbusds.jose.JOSEException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
