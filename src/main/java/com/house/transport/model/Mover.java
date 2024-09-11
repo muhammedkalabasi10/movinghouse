@@ -29,6 +29,7 @@ public class Mover implements UserDetails {
     private String email;
     @Pattern(regexp = "^[0-9]{10,11}$", message = "Phone number must be between 10 and 11 digits")
     private String phone;
+    @JsonIgnore
     private String password;
     private String company_name;
     private String logo;

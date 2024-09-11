@@ -1,4 +1,4 @@
-package com.house.transport.security.detailsservice;
+package com.house.transport.security.service;
 
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
