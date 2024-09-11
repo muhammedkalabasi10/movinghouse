@@ -49,6 +49,7 @@ public class Customer implements UserDetails {
     @Size(min = 8, message = "Password must be at least 8 characters long")
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).*$",
             message = "Password must include at least one letter, one number, and one special character")
+    @JsonIgnore
     private String password;
 
     @Override
