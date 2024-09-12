@@ -24,7 +24,7 @@ public class ReviewController {
     public ResponseEntity<Review> getReview(@PathVariable Long id){
         Review review = reviewService.getReviewById(id);
         if(review != null)
-            return ResponseEntity.ok(reviewService.getReviewById(id));
+            return ResponseEntity.ok(review);
         else
             return null; //NotFoundException exception will be create
     }
