@@ -2,6 +2,7 @@ package com.house.transport.security.auth;
 
 import com.house.transport.model.Customer;
 import com.house.transport.model.Mover;
+import com.house.transport.security.DTO.ChangeEmailRequestDTO;
 import com.house.transport.security.DTO.ChangePasswordRequestDTO;
 import com.house.transport.security.service.PasswordEmailService;
 import com.house.transport.security.token.RefreshToken;
@@ -82,5 +83,15 @@ public class AuthController {
     @PostMapping("/changepassword/customer")
     public ResponseEntity<Customer> changeCustomerPassword(@RequestBody ChangePasswordRequestDTO request){
         return ResponseEntity.ok(passwordEmailService.changeCustomerPassword(request.getEmail(), request.getOldPassword(), request.getNewPassword()));
+    }
+
+    @PostMapping("/changepassword/mover")
+    public ResponseEntity<Mover> changeMoverPassword(@RequestBody ChangePasswordRequestDTO request){
+        return ResponseEntity.ok(passwordEmailService.changeMoverPassword(request.getEmail(), request.getOldPassword(), request.getNewPassword()));
+    }
+
+    @PostMapping("/changeemail/mover")
+    public ResponseEntity<Mover> changeMoverEmail(@RequestBody ChangeEmailRequestDTO request){
+        return ResponseEntity.ok(passwordEmailService.changeMoverEmail(request.getOldEmail(), request.getNewEmail(), request.getPassword()));
     }
 }

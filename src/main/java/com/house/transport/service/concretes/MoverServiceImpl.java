@@ -15,11 +15,6 @@ public class MoverServiceImpl implements MoverService {
     MoverRepository moverRepository;
 
     @Override
-    public Mover createMover(Mover mover) {
-        return moverRepository.save(mover);
-    }
-
-    @Override
     public List<Mover> fetchMovers() {
         return moverRepository.findAll();
     }
@@ -32,15 +27,5 @@ public class MoverServiceImpl implements MoverService {
     @Override
     public Mover updateMover(Mover mover) {
         return moverRepository.save(mover);
-    }
-
-    @Override
-    public boolean deleteMoverById(Long id) {
-        if(moverRepository.existsById(id)){
-            moverRepository.deleteById(id);
-            return true;
-        }else{
-            return false;
-        }
     }
 }
