@@ -27,8 +27,8 @@ public class ContractController {
     // Get a contract by its ID
     @GetMapping("/{id}")
     public ResponseEntity<Contract> getContractById(@PathVariable Long id) {
-        Optional<Contract> contract = contractService.getContractById(id);
-        return contract.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        Contract contract = contractService.getContractById(id);
+        return ResponseEntity.ok(contract);
     }
 
     // Get all contracts
