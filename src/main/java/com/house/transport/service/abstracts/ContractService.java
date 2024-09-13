@@ -9,7 +9,7 @@ public interface ContractService {
 
     Contract saveContract(Contract contract);
 
-    Optional<Contract> getContractById(Long id);
+    Contract getContractById(Long id);
 
     List<Contract> getAllContracts();
 

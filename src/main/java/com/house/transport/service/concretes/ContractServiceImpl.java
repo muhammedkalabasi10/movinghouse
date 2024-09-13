@@ -1,6 +1,7 @@
 package com.house.transport.service.concretes;
 
 
+import com.house.transport.exception.custom.NotFoundException;
 import com.house.transport.model.Contract;
 import com.house.transport.repository.ContractRepository;
 import com.house.transport.service.abstracts.ContractService;
@@ -26,9 +27,12 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public Optional<Contract> getContractById(Long id) {
-        return contractRepository.findById(id);
+    public Contract getContractById(Long id) {
+        return contractRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Contract not found with the given ID."));
     }
+
+
 
     @Override
     public List<Contract> getAllContracts() {

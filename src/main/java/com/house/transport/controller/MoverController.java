@@ -5,6 +5,7 @@ import com.house.transport.service.abstracts.MoverService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,5 +33,11 @@ public class MoverController {
     @PutMapping
     public ResponseEntity<Mover> updateMover(@RequestBody @Valid Mover mover){
         return ResponseEntity.ok(moverService.updateMover(mover));
+    }
+    @PreAuthorize("#id == authentication.principal.id")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteMover(@PathVariable Long id) {
+        moverService.deleteMoverById(id);
+        return ResponseEntity.ok("Mover successfully deleted.");
     }
 }

@@ -8,4 +8,5 @@ public interface MoverService {
     public abstract List<Mover> fetchMovers();
     public abstract Mover getMoverById(Long id);
     public abstract Mover updateMover(Mover mover);
+    void deleteMoverById(Long id);
 }
