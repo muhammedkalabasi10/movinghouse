@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Entity
-@Table(name = "customers")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,23 +26,20 @@ public class Customer implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "surname", nullable = false)
     private String surname;
 
-    @Column(name = "email", nullable = false, unique = true)
-    @NotBlank()
+    @Column(unique = true, nullable = false)
+    @NotBlank(message = "Email is required")
     @Email(message = "Please enter a valid email")
     private String email;
 
-    @Column(name = "phone", nullable = false, unique = true)
-    @NotBlank()
+    @Column(unique = true, nullable = false)
+    @NotBlank(message = "Phone is required")
     @Pattern(regexp = "^[0-9]{10,11}$", message = "Phone number must be between 10 and 11 digits")
     private String phone;
 
-    @Column(name = "password", nullable = false)
     @NotBlank(message = "Password is required")
     @Size(min = 8, message = "Password must be at least 8 characters long")
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).*$",
