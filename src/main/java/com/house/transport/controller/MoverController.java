@@ -20,6 +20,11 @@ public class MoverController {
         return ResponseEntity.ok(moverService.fetchMovers());
     }
 
+    @GetMapping("/page")
+    public ResponseEntity<List<Mover>> getMoverList(@RequestParam int page_num, @RequestParam int record_num){
+        return ResponseEntity.ok(moverService.getMoverList(page_num, record_num));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Mover> getMoverById(@PathVariable Long id){
         Mover mover = moverService.getMoverById(id);
