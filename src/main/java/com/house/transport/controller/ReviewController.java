@@ -1,5 +1,6 @@
 package com.house.transport.controller;
 
+import com.github.dockerjava.api.exception.NotFoundException;
 import com.house.transport.model.Review;
 import com.house.transport.service.abstracts.ReviewService;
 import jakarta.validation.Valid;
@@ -23,10 +24,7 @@ public class ReviewController {
     @GetMapping("{id}")
     public ResponseEntity<Review> getReview(@PathVariable Long id){
         Review review = reviewService.getReviewById(id);
-        if(review != null)
-            return ResponseEntity.ok(review);
-        else
-            return null; //NotFoundException exception will be create
+        return ResponseEntity.ok(review);
     }
 
     @PutMapping
@@ -39,6 +37,6 @@ public class ReviewController {
         if(reviewService.deleteReviewById(id))
             return ResponseEntity.ok(true);
         else
-            return null; //NotFoundException exception will be create
+            throw new NotFoundException("Review not found.");
     }
 }

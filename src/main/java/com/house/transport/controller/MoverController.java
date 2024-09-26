@@ -28,10 +28,8 @@ public class MoverController {
     @GetMapping("/{id}")
     public ResponseEntity<Mover> getMoverById(@PathVariable Long id){
         Mover mover = moverService.getMoverById(id);
-        if(mover != null)
-            return ResponseEntity.ok(mover);
-        else
-            return null; //NotFoundException exception will be create
+        return ResponseEntity.ok(mover);
+
     }
 
     @PutMapping

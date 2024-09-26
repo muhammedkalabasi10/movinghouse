@@ -2,8 +2,6 @@ package com.house.transport.security.token;
 
 import com.house.transport.model.Customer;
 import com.house.transport.model.Mover;
-import com.house.transport.repository.CustomerRepository;
-import com.house.transport.repository.MoverRepository;
 import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
