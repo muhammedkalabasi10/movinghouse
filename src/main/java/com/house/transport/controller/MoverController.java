@@ -21,13 +21,16 @@ public class MoverController {
         return ResponseEntity.ok(moverService.fetchMovers());
     }
 
+    @GetMapping("/page")
+    public ResponseEntity<List<Mover>> getMoverList(@RequestParam int page_num, @RequestParam int record_num){
+        return ResponseEntity.ok(moverService.getMoverList(page_num, record_num));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Mover> getMoverById(@PathVariable Long id){
         Mover mover = moverService.getMoverById(id);
-        if(mover != null)
-            return ResponseEntity.ok(mover);
-        else
-            return null; //NotFoundException exception will be create
+        return ResponseEntity.ok(mover);
+
     }
 
     @PutMapping

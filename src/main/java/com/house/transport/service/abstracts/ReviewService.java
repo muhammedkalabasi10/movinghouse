@@ -1,14 +1,14 @@
 package com.house.transport.service.abstracts;
 
-import com.house.transport.model.Mover;
 import com.house.transport.model.Review;
 
 import java.util.List;
 
 public interface ReviewService {
-    public abstract Review createReview(Review review);
-    public abstract List<Review> fetchReviews();
-    public abstract Review getReviewById(Long id);
-    public abstract Review updateReview(Review review);
-    public abstract boolean deleteReviewById(Long id);
+    Review createReview(Review review);
+    List<Review> fetchReviews();
+    List<Review> getReviewList(int page_num, int record_num);
+    Review getReviewById(Long id);
+    Review updateReview(Review review);
+    boolean deleteReviewById(Long id);
 }

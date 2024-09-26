@@ -6,6 +6,9 @@ import com.house.transport.model.Contract;
 import com.house.transport.repository.ContractRepository;
 import com.house.transport.service.abstracts.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,12 +30,16 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public Contract getContractById(Long id) {
-        return contractRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Contract not found with the given ID."));
+    public List<Contract> getContractList(int page_num, int record_num){
+        Pageable pageable = PageRequest.of(page_num, record_num);
+        Page<Contract> contractPage = contractRepository.findAll(pageable);
+        return contractPage.toList();
     }
 
-
+    @Override
+    public Optional<Contract> getContractById(Long id) {
+        return contractRepository.findById(id);
+    }
 
     @Override
     public List<Contract> getAllContracts() {

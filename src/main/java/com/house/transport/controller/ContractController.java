@@ -17,21 +17,18 @@ public class ContractController {
     @Autowired
     private ContractService contractService;
 
-    // Create a new contract
     @PostMapping
     public ResponseEntity<Contract> createContract(@RequestBody Contract contract) {
         Contract savedContract = contractService.saveContract(contract);
         return ResponseEntity.ok(savedContract);
     }
 
-    // Get a contract by its ID
     @GetMapping("/{id}")
     public ResponseEntity<Contract> getContractById(@PathVariable Long id) {
         Contract contract = contractService.getContractById(id);
         return ResponseEntity.ok(contract);
     }
 
-    // Get all contracts
     @GetMapping
     public ResponseEntity<List<Contract>> getAllContracts() {
         List<Contract> contracts = contractService.getAllContracts();
@@ -43,7 +40,6 @@ public class ContractController {
         return ResponseEntity.noContent().build();
     }
 
-    // Get contracts by customer ID
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<List<Contract>> getContractsByCustomerId(@PathVariable Long customerId) {
         List<Contract> contracts = contractService.getContractsByCustomerId(customerId);
