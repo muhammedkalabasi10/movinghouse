@@ -47,4 +47,12 @@ public class PasswordEmailService {
         mover.setEmail(newEmail);
         return moverRepository.save(mover);
     }
+    public Customer changeCustomerEmail(String oldEmail, String newEmail, String password){
+        Customer customer = customerRepository.findByEmail(oldEmail).orElseThrow(()-> new UsernameNotFoundException("Customer not found"));
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(oldEmail,password)
+        );
+        customer.setEmail(newEmail);
+        return customerRepository.save(customer);
+    }
 }

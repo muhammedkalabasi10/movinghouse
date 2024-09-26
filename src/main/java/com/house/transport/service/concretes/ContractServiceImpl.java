@@ -1,6 +1,7 @@
 package com.house.transport.service.concretes;
 
 
+import com.house.transport.exception.custom.NotFoundException;
 import com.house.transport.model.Contract;
 import com.house.transport.repository.ContractRepository;
 import com.house.transport.service.abstracts.ContractService;
