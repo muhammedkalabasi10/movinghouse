@@ -25,8 +25,9 @@ public class ReviewServiceImpl implements ReviewService {
     public List<Review> fetchReviews() {
         return reviewRepository.findAll();
     }
+
     @Override
-    public List<Review> getReviewList(int page_num, int record_num){
+    public List<Review> getReviewList(int page_num, int record_num) {
         Pageable pageable = PageRequest.of(page_num, record_num);
         Page<Review> reviewPage = reviewRepository.findAll(pageable);
         return reviewPage.toList();
