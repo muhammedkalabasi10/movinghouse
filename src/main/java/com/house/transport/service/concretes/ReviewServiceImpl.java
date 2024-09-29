@@ -1,7 +1,6 @@
 package com.house.transport.service.concretes;
 
 import com.house.transport.exception.custom.NotFoundException;
-import com.house.transport.model.Mover;
 import com.house.transport.model.Review;
 import com.house.transport.repository.ReviewRepository;
 import com.house.transport.service.abstracts.ReviewService;

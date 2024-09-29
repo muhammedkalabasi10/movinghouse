@@ -1,7 +1,6 @@
 package com.house.transport.service.concretes;
 
 import com.house.transport.exception.custom.NotFoundException;
-import com.house.transport.model.Customer;
 import com.house.transport.model.Mover;
 import com.house.transport.repository.MoverRepository;
 import com.house.transport.service.abstracts.MoverService;
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -40,5 +40,10 @@ public class MoverServiceImpl implements MoverService {
     @Override
     public Mover updateMover(Mover mover) {
         return moverRepository.save(mover);
+    }
+
+    @PreAuthorize("#id == authentication.principal.id")
+    public void deleteMoverById(Long id) {
+        moverRepository.deleteById(id);
     }
 }
