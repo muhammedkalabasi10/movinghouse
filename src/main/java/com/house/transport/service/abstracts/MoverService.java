@@ -9,4 +9,5 @@ public interface MoverService {
     List<Mover> getMoverList(int page_num, int record_num);
     Mover getMoverById(Long id);
     Mover updateMover(Mover mover);
+    void deleteMoverById(Long id);
 }

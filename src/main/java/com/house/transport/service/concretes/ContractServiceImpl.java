@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ContractServiceImpl implements ContractService {
@@ -37,8 +36,8 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public Optional<Contract> getContractById(Long id) {
-        return contractRepository.findById(id);
+    public Contract getContractById(Long id) {
+        return contractRepository.findById(id).orElseThrow(()-> new NotFoundException("Contract Not Found!"));
     }
 
     @Override
@@ -55,6 +54,4 @@ public class ContractServiceImpl implements ContractService {
     public List<Contract> getContractsByCustomerId(Long customerId) {
         return contractRepository.findByCustomerId(customerId);
     }
-
-
 }
