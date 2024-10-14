@@ -1,5 +1,6 @@
 package com.house.transport.service.concretes;
 
+import com.house.transport.exception.custom.NotFoundException;
 import com.house.transport.model.Review;
 import com.house.transport.repository.ReviewRepository;
 import com.house.transport.service.abstracts.ReviewService;
@@ -35,7 +36,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review getReviewById(Long id) {
-        return reviewRepository.findById(id).orElse(null);
+        return reviewRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Review not found with the given ID."));
     }
 
     @Override

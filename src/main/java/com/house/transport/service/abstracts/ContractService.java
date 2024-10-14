@@ -10,7 +10,7 @@ public interface ContractService {
     Contract saveContract(Contract contract);
     List<Contract> getContractList(int page_num, int record_num);
 
-    Optional<Contract> getContractById(Long id);
+    Contract getContractById(Long id);
 
     List<Contract> getAllContracts();
 
